@@ -3,8 +3,8 @@
 
     <item
         android:id="@+id/load_data_item"
-        android:title="Загрузить данные" />
+        android:title="@string/load_data" />
     <item
         android:id="@+id/save_result_item"
-        android:title="Выгрузить результаты" />
+        android:title="@string/upload_results" />
 </menu>

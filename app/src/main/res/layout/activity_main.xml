@@ -10,7 +10,7 @@
         android:id="@+id/barcode_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Enter barocode"
+        android:hint="@string/enter_barcode"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintRight_toLeftOf="@id/add_button"/>
@@ -23,14 +23,13 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
-    <EditText
+    <TextView
         android:id="@+id/result_text"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:inputType="textMultiLine"
-        app:layout_constraintTop_toBottomOf="@id/barcode_text"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        />
+        app:layout_constraintTop_toBottomOf="@id/barcode_text"
+        tools:text="TestText" />
 </androidx.constraintlayout.widget.ConstraintLayout>

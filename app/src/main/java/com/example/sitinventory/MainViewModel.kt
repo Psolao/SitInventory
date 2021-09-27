@@ -3,12 +3,14 @@ package com.example.sitinventory
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import java.io.File
+import java.lang.StringBuilder
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
     private var fData:MutableMap<String,BarcodeInfo>? = null
     val data:Map<String, BarcodeInfo>?
       get() =fData
 
+    var info = StringBuilder("")
 
     private var fResults:MutableSet<String>? = null
     val result:MutableSet<String>? get() = fResults

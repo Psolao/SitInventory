@@ -7,6 +7,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -15,7 +16,7 @@ import java.io.File
 
 class MainActivity : AppCompatActivity() {
     lateinit var barcodeEdit:EditText
-    lateinit var resultEdit:EditText
+    lateinit var resultEdit:TextView
     lateinit var addButton:Button
     lateinit var dataFile: File
     lateinit var resultFile: File
@@ -46,6 +47,7 @@ class MainActivity : AppCompatActivity() {
             }
             false
         }
+        resultEdit.text = viewModel.info
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -113,8 +115,10 @@ class MainActivity : AppCompatActivity() {
     }
 
   fun addLine(s:String){
-      resultEdit.append(s+"\n")
+      viewModel.info.appendLine(s)
+      resultEdit.text = viewModel.info.toString()
   }
+
 
   fun exportResultAsText(){
       val sendIntent: Intent = Intent().apply {
@@ -135,7 +139,6 @@ class MainActivity : AppCompatActivity() {
             type = "text/plain"
         }
         startActivity(Intent.createChooser(shareIntent, resources.getText(R.string.send_to)))
-
     }
 
 

@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">SitInventory</string>
     <string name="send_to">result</string>
+    <string name="load_data">Загрузить данные</string>
+    <string name="upload_results">Выгрузить результаты</string>
+    <string name="enter_barcode">Введите штрихкод</string>
 </resources>
