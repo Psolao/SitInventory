@@ -1,7 +1,10 @@
 package com.example.sitinventory
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.KeyEvent
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Button
 import android.widget.EditText
 import androidx.activity.result.contract.ActivityResultContracts
@@ -45,6 +48,26 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.load_data_item -> {
+                selectFile()
+                true
+            }
+            R.id.save_result_item -> {
+                exportResultAsText()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+
     fun initData(){
         resultFile = File(filesDir,"result.csv")
         if (!resultFile.exists()){
@@ -83,14 +106,37 @@ class MainActivity : AppCompatActivity() {
         }
         val ss = (if (!res.isEmpty()) "\n" else "")+s
         res.add(s)
-        resultFile.writeText(ss)
+        resultFile.appendText(ss)
 
-        addLine("${info.barcode} \n${info.code} \n${info.department} \n${info.worker}")
+        addLine("${info.barcode} \n${info.code} \n"+
+                "${info.name} \n${info.department} \n${info.worker}")
     }
 
   fun addLine(s:String){
       resultEdit.append(s+"\n")
   }
+
+  fun exportResultAsText(){
+      val sendIntent: Intent = Intent().apply {
+          action = Intent.ACTION_SEND
+          putExtra(Intent.EXTRA_TEXT, viewModel.result!!.joinToString("\n"))
+          type = "text/plain"
+      }
+      val shareIntent = Intent.createChooser(sendIntent, null)
+      startActivity(shareIntent)
+
+  }
+
+
+    fun exportResultAsFile(){
+        val shareIntent: Intent = Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_STREAM, resultFile.toURI())
+            type = "text/plain"
+        }
+        startActivity(Intent.createChooser(shareIntent, resources.getText(R.string.send_to)))
+
+    }
 
 
 }
