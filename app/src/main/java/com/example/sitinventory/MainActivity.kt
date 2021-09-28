@@ -2,6 +2,7 @@ package com.example.sitinventory
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Environment
 import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
@@ -32,7 +33,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        viewModel = ViewModelProvider(this).get(com.example.sitinventory.MainViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         barcodeEdit = findViewById(R.id.barcode_text)
         resultEdit = findViewById(R.id.result_text)
         addButton = findViewById(R.id.add_button)
@@ -63,6 +64,10 @@ class MainActivity : AppCompatActivity() {
             }
             R.id.save_result_item -> {
                 exportResultAsText()
+                true
+            }
+            R.id.save_result_file_item -> {
+                exportResultAsFile()
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -133,9 +138,11 @@ class MainActivity : AppCompatActivity() {
 
 
     fun exportResultAsFile(){
+        val fileDest = File(getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS),"results.csv")
+        resultFile.copyTo(fileDest, true)
         val shareIntent: Intent = Intent().apply {
             action = Intent.ACTION_SEND
-            putExtra(Intent.EXTRA_STREAM, resultFile.toURI())
+            putExtra(Intent.EXTRA_STREAM, fileDest.toURI())
             type = "text/plain"
         }
         startActivity(Intent.createChooser(shareIntent, resources.getText(R.string.send_to)))

@@ -7,4 +7,8 @@
     <item
         android:id="@+id/save_result_item"
         android:title="@string/upload_results" />
+    <item
+        android:id="@+id/save_result_file_item"
+        android:title="@string/upload_file_results" />
+
 </menu>
