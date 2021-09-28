@@ -11,6 +11,7 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.FileProvider
 import androidx.lifecycle.ViewModelProvider
 import java.io.File
 
@@ -138,16 +139,21 @@ class MainActivity : AppCompatActivity() {
 
 
     fun exportResultAsFile(){
-        val fileDest = File(getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS),"results.csv")
-        resultFile.copyTo(fileDest, true)
+        /*val fileDest =  File(getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS),"results.csv")
+            resultFile.copyTo(fileDest, true)*/
         val shareIntent: Intent = Intent().apply {
             action = Intent.ACTION_SEND
-            putExtra(Intent.EXTRA_STREAM, fileDest.toURI())
+            val uri = FileProvider.getUriForFile(
+                this@MainActivity,
+                BuildConfig.APPLICATION_ID + ".provider",
+               // fileDest
+              resultFile
+            )
+            putExtra(Intent.EXTRA_STREAM, uri)
+            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             type = "text/plain"
         }
         startActivity(Intent.createChooser(shareIntent, resources.getText(R.string.send_to)))
     }
-
-
 }
 
