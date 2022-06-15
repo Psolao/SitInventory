@@ -20,7 +20,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
        fData!!.clear()
        file.forEachLine {
            val s = it.split(delimiters = arrayOf(";"), ignoreCase = false,limit =  6)
-           val barcode = s[0]!!
+           val barcode = s[0]
            fData!!.put(barcode,
                BarcodeInfo(barcode, getString(s,1),
                            getString(s,2),
