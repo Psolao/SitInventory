@@ -2,7 +2,7 @@ package com.example.sitinventory
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Environment
+import android.text.method.ScrollingMovementMethod
 import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
@@ -50,6 +50,7 @@ class MainActivity : AppCompatActivity() {
             false
         }
         resultEdit.text = viewModel.info
+        resultEdit.setMovementMethod(ScrollingMovementMethod())
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -120,8 +121,8 @@ class MainActivity : AppCompatActivity() {
                 "${info.name} \n${info.department} \n${info.worker}")
     }
 
-  fun addLine(s:String){
-      viewModel.info.appendLine(s)
+  private fun addLine(s:String){
+      viewModel.info.insert(0,s+'\n')
       resultEdit.text = viewModel.info.toString()
   }
 
